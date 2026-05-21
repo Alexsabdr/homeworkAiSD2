@@ -1,27 +1,50 @@
-package cw0805;
+package cw1505;
 
+import java.util.HashMap;
+import java.util.Scanner;
 
 public class z4 {
     public static void main(String[] args) {
-        int n = 3;
-        int[][] f = {
-                {1, 2, 3},
-                {4, 8, 4},
-                {8, 6, 7}
-        };
-        int[][] a = new int[n][n];
-        a[0][0] = f[0][0];
+        Scanner sc = new Scanner(System.in);
 
-        for (int i = 1; i < n; i++) {
-            a[i][0] = a[i - 1][0] + f[i][0];
-            a[0][i] = a[0][i - 1] + f[0][i];
+        int n = sc.nextInt();
+        int k = sc.nextInt();
+
+        long[] a = new long[n];
+        for (int i = 0; i < n; i++) {
+            a[i] = sc.nextInt();
         }
-        for (int i = 1; i < n; i++) {
-            for (int j = 1; j < n; j++) {
-                int min = (a[i - 1][j] < a[i][j - 1]) ? a[i - 1][j] : a[i][j - 1];
-                a[i][j] = min + f[i][j];
+
+        HashMap<Long, Long> left = new HashMap<>();
+        HashMap<Long, Long> right = new HashMap<>();
+
+
+        for (long i : a) {
+            right.put(i, right.getOrDefault(i, 0L) + 1);
+        }
+
+        long ans = 0;
+
+        for (int i = 0; i < n; i++) {
+            long now = a[i];
+            long cnt = right.get(now);
+            if (cnt == 1) {
+                right.remove(now);
+            } else {
+                right.put(now, cnt - 1);
             }
+
+            if (now % k == 0) {
+                long first = now / k;
+                long tretiy = now * k;
+                long left1 = left.getOrDefault(first, 0L);
+                long right1 = right.getOrDefault(tretiy, 0L);
+                ans += left1 * right1;
+            }
+
+            left.put(now, left.getOrDefault(now, 0L) + 1);
         }
-        System.out.println(a[n - 1][n - 1]);
+
+        System.out.println(ans);
     }
 }

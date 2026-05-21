@@ -1,23 +1,42 @@
-package cw0805;
-import java.util.Scanner;
-
+package cw1505;
 public class z2 {
+
+    public static int lengthOfLIS(int[] nums) {
+        if (nums == null || nums.length == 0) {
+            return 0;
+        }
+
+        int[] tails = new int[nums.length];
+        int size = 0;
+
+        for (int x : nums) {
+            int left = 0;
+            int right = size;
+
+            while (left < right) {
+                int mid = left + (right - left) / 2;
+                if (tails[mid] < x) {
+                    left = mid + 1;
+                } else {
+                    right = mid;
+                }
+            }
+
+            tails[left] = x;
+
+            if (left == size) {
+                size++;
+            }
+        }
+
+        return size;
+    }
+
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        int n = scanner.nextInt();
-
-        if (n <= 1) {
-            System.out.println(n);
-            return;
-        }
-        int[] dp = new int[n + 1];
-        dp[0] = 0;
-        dp[1] = 1;
-
-        for (int i = 2; i <= n - 1; i++) {
-            dp[i] = (dp[i - 1] + dp[i - 2]) % 10;
-        }
-        System.out.println("Последняя цифра: " + dp[n - 1]);
+        int[] nums = {10, 9, 2, 5, 3, 7, 101, 18};
+        int result = lengthOfLIS(nums);
+        System.out.println("Длина наибольшей возрастающей последовательности: " + result);
     }
 }
+
 
