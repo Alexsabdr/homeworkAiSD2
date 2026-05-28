@@ -1,13 +1,32 @@
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
-void main() {
-    //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-    // to see how IntelliJ IDEA suggests fixing it.
-    IO.println(String.format("Hello and welcome!"));
+package hw3;
 
-    for (int i = 1; i <= 5; i++) {
-        //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-        // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-        IO.println("i = " + i);
+import javax.swing.tree.TreeNode;
+
+public class Main {
+    public static void main(String[] args) {
+        Tree<Integer> myTree = new Tree<>();
+        myTree.add(3);
+        myTree.add(6);
+        myTree.add(5);
+        myTree.add(4);
+        myTree.add(2);
+        myTree.add(1);
+        myTree.add(0);
+
+        myTree.remove(5, myTree.getRoot());
+        TreeNode<Integer> parent = myTree.getParent(4, myTree.getRoot());
+
+        Tree<Integer> tree1 = new Tree<>();
+        tree1.add(50);
+        tree1.add(30);
+        tree1.add(20);
+        tree1.add(40);
+        tree1.add(35);
+        tree1.add(38);
+
+        tree1.inOrder(tree1.getRoot());
+
+        tree1.remove(30, tree1.getRoot());
+        tree1.inOrder(tree1.getRoot());
     }
 }
